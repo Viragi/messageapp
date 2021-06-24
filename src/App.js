@@ -1,23 +1,32 @@
-import logo from './logo.svg';
+import {useState} from 'react';
 import './App.css';
+import Form from "react-bootstrap/Form";
 
 function App() {
+  const [inputMessage, setinputMessage] = useState("");
+  const [displayMessage, setDisplayMessage] = useState([]);
+
+  const handleEnterKey = (e) => {
+    console.log(e.charCode);
+    if (e.charCode === 13) {
+      setinputMessage("");
+      setDisplayMessage([...displayMessage,inputMessage]);
+    }
+  }
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <div>
+        <Form.Control type="text" placeholder="Normal text" value = {inputMessage} onChange = {(e) => setinputMessage(e.target.value)} onKeyPress = {handleEnterKey}/>
+      </div>
+      <div>
+        {displayMessage.map((item) => {
+          return (
+            <div>
+              {item}
+            </div>
+          )
+        } )}
+      </div>
     </div>
   );
 }
