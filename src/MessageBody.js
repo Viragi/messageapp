@@ -1,10 +1,11 @@
-import Dialouge from './Dialouge';
+import Dialogue from './Dialogue';
 
 export default function MessageBody({displayMessage}){
 
     let groupMessage = displayMessage.reduce((prev, curr) => {
         if (prev.length > 0 && curr.user == prev[prev.length - 1].user) {
            prev[prev.length - 1].message.push(...curr.message);
+           prev[prev.length - 1].time = curr.time;
            return prev;
         } else {
           let newMessage = [...curr.message]
@@ -14,10 +15,10 @@ export default function MessageBody({displayMessage}){
         }
       }, []);
     return (
-        <div>
+        <div className = "messagesList">
         {groupMessage && groupMessage.map((item, i) => {
           return (
-            <Dialouge data = {item} key = {i+"dial"}/>
+            <Dialogue data = {item} key = {i+"dial"}/>
           )
         } )}
       </div>
