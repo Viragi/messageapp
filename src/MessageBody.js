@@ -13,7 +13,7 @@ export default function MessageBody({displayMessage}){
            prev.push(newCurr);
            return prev
         }
-      }, []);
+      }, []).reverse();
     return (
         <div className = "messagesList">
         {groupMessage && groupMessage.map((item, i) => {
