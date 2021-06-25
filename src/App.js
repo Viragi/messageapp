@@ -1,16 +1,25 @@
 import {useState} from 'react';
 import './App.css';
 import Form from "react-bootstrap/Form";
+import Dialouge from './Dialouge';
 
 function App() {
   const [inputMessage, setinputMessage] = useState("");
   const [displayMessage, setDisplayMessage] = useState([]);
 
   const handleEnterKey = (e) => {
-    console.log(e.charCode);
     if (e.charCode === 13) {
       setinputMessage("");
-      setDisplayMessage([...displayMessage,inputMessage]);
+      if (displayMessage.length > 0 && displayMessage[displayMessage.length - 1].name == "Me") {
+        let newMessageArr = [...displayMessage[displayMessage.length - 1].message, inputMessage];
+        let newObj = {...displayMessage[displayMessage.length - 1], message: newMessageArr};
+        let newdisplayMessage = [...displayMessage];
+        newdisplayMessage.pop();
+        newdisplayMessage.push(newObj);
+        setDisplayMessage(newdisplayMessage);
+      } else {
+        setDisplayMessage([...displayMessage, {name:'Me', message:[inputMessage],time: new Date() }]);
+      }
     }
   }
   return (
@@ -21,9 +30,7 @@ function App() {
       <div>
         {displayMessage.map((item) => {
           return (
-            <div>
-              {item}
-            </div>
+            <Dialouge data = {item}/>
           )
         } )}
       </div>
