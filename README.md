@@ -14,5 +14,6 @@
 - Giphy for getting trending gifs
 
 ### How to start Project on your local machine?
+- git clone this project
 - npm install
 - npm start
