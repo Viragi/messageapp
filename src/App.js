@@ -1,39 +1,46 @@
-import {useState} from 'react';
+import {useState, useEffect} from 'react';
+import GifDisplay from './GifDisplay';
+import MessageInputBar from './MessageInputBar';
 import './App.css';
-import Form from "react-bootstrap/Form";
-import Dialouge from './Dialouge';
+import MessageBody from './MessageBody';
+const RandomUserData = require( './data.json').randomUsers;
 
 function App() {
-  const [inputMessage, setinputMessage] = useState("");
   const [displayMessage, setDisplayMessage] = useState([]);
-
-  const handleEnterKey = (e) => {
-    if (e.charCode === 13) {
-      setinputMessage("");
-      if (displayMessage.length > 0 && displayMessage[displayMessage.length - 1].name == "Me") {
-        let newMessageArr = [...displayMessage[displayMessage.length - 1].message, inputMessage];
-        let newObj = {...displayMessage[displayMessage.length - 1], message: newMessageArr};
-        let newdisplayMessage = [...displayMessage];
-        newdisplayMessage.pop();
-        newdisplayMessage.push(newObj);
-        setDisplayMessage(newdisplayMessage);
-      } else {
-        setDisplayMessage([...displayMessage, {name:'Me', message:[inputMessage],time: new Date() }]);
-      }
-    }
+  const [gifData, setGifData] = useState([]);
+  const [showGifBox, setShowGifBox] = useState(false);
+  
+  const updateDisplayMessage = ({user, message, time} ) => {
+    setDisplayMessage((displayMessage) => [...displayMessage, {user, message:[message],time }]);
   }
+
+  useEffect(() => {
+    setInterval(() => {
+      let randomIndex = Math.floor(Math.random() * (RandomUserData.length));
+      updateDisplayMessage({...RandomUserData[randomIndex], time: new Date()})
+    }, 10000);
+  }, [])
+
+  useEffect(() => {
+    fetch(`http://api.giphy.com/v1/gifs/trending?api_key=Awq5410QQl0416nJogqlsinldM2s9PCA`).then(res => res.json()).then((res) => {
+      setGifData(res.data);
+    }).catch((e)=> console.log(e, "error"))
+  },[])
+
+  const handleMessage = (inputMessage) => {
+    updateDisplayMessage({user: "Me",message: inputMessage, time: new Date()});
+  }
+
+  const handleGifClick = (url) => {
+    setShowGifBox(false)
+    updateDisplayMessage({user: "Me",message: url, time: new Date()})
+  }
+
   return (
     <div className="App">
-      <div>
-        <Form.Control type="text" placeholder="Normal text" value = {inputMessage} onChange = {(e) => setinputMessage(e.target.value)} onKeyPress = {handleEnterKey}/>
-      </div>
-      <div>
-        {displayMessage.map((item) => {
-          return (
-            <Dialouge data = {item}/>
-          )
-        } )}
-      </div>
+      <MessageInputBar handleGifButton= {()=>setShowGifBox(true)} handleMessage = {handleMessage}/>
+      <MessageBody displayMessage = {displayMessage}/>
+     {showGifBox && <GifDisplay data = {gifData} handleGifClick = {handleGifClick}/>} 
     </div>
   );
 }
