@@ -1,0 +1,22 @@
+
+{
+ "randomUsers" : [
+     {
+        "user": "user1",
+        "message" : ["Text everyone on your contacts 'I won the lottery!' and see what they reply!"]
+     },
+     {
+        "user": "user2",
+        "message" : ["Say you have a pizza joke, then tell them, 'Never mind, it's too cheesy.'"]
+     },
+     {
+        "user": "user3",
+        "message" : ["If someone doesn't answer their phone, text them urgent messages. When they finally DO answer, tell them you're bored."]
+     },
+     {
+        "user": "user4",
+        "message" : ["Redecorate your room so it's exactly the same but mirrored."]
+     } 
+ ] 
+  
+}
