@@ -3,19 +3,23 @@
  "randomUsers" : [
      {
         "user": "user1",
-        "message" : ["Text everyone on your contacts 'I won the lottery!' and see what they reply!"]
+        "message" : ["Text everyone on your contacts 'I won the lottery!' and see what they reply!"],
+        "avatar": "https://robohash.org/b5b4aa2195956a0eca3cc1fada2c5d76?set=set4&bgset=&size=200x200"
      },
      {
         "user": "user2",
-        "message" : ["Say you have a pizza joke, then tell them, 'Never mind, it's too cheesy.'"]
+        "message" : ["Say you have a pizza joke, then tell them, 'Never mind, it's too cheesy.'"],
+        "avatar": "https://avatars.dicebear.com/v2/female/b739a303db780fcf88e3b8bef26dc1db.svg"
      },
      {
         "user": "user3",
-        "message" : ["If someone doesn't answer their phone, text them urgent messages. When they finally DO answer, tell them you're bored."]
+        "message" : ["If someone doesn't answer their phone, text them urgent messages. When they finally DO answer, tell them you're bored."],
+        "avatar": "https://gravatar.com/avatar/c4b396d71de0e04a784077e01fff3f1b?s=400&d=robohash&r=x"
      },
      {
         "user": "user4",
-        "message" : ["Redecorate your room so it's exactly the same but mirrored."]
+        "message" : ["Redecorate your room so it's exactly the same but mirrored."],
+        "avatar": "https://gravatar.com/avatar/fb283ed9cad0a9c2928657554e31a059?s=400&d=robohash&r=x"
      } 
  ] 
   

@@ -1,17 +1,21 @@
 import {useState, useEffect} from 'react';
-import GifDisplay from './GifDisplay';
 import MessageInputBar from './MessageInputBar';
 import './App.css';
 import MessageBody from './MessageBody';
+import useGiphy from './useGiphy';
 const RandomUserData = require( './data.json').randomUsers;
 
 function App() {
+  const user = "Me";
+  const gifData = useGiphy();
+
   const [displayMessage, setDisplayMessage] = useState([]);
-  const [gifData, setGifData] = useState([]);
-  const [showGifBox, setShowGifBox] = useState(false);
-  
-  const updateDisplayMessage = ({user, message, time} ) => {
-    setDisplayMessage((displayMessage) => [...displayMessage, {user, message:[message],time }]);
+
+  const updateDisplayMessage = ({user, message, time, avatar} ) => {
+    setDisplayMessage((displayMessage) => [...displayMessage, {user, message:[message], time, avatar}]);
+  }
+  const handleMessage = (inputMessage, type) => {
+    updateDisplayMessage({user: user,message: inputMessage, time: new Date(), avatar: "https://gravatar.com/avatar/b5b4aa2195956a0eca3cc1fada2c5d76?s=200&d=robohash&r=x"});
   }
 
   useEffect(() => {
@@ -20,27 +24,11 @@ function App() {
       updateDisplayMessage({...RandomUserData[randomIndex], time: new Date()})
     }, 10000);
   }, [])
-
-  useEffect(() => {
-    fetch(`http://api.giphy.com/v1/gifs/trending?api_key=Awq5410QQl0416nJogqlsinldM2s9PCA`).then(res => res.json()).then((res) => {
-      setGifData(res.data);
-    }).catch((e)=> console.log(e, "error"))
-  },[])
-
-  const handleMessage = (inputMessage) => {
-    updateDisplayMessage({user: "Me",message: inputMessage, time: new Date()});
-  }
-
-  const handleGifClick = (url) => {
-    setShowGifBox(false)
-    updateDisplayMessage({user: "Me",message: url, time: new Date()})
-  }
-
+  
   return (
     <div className="App">
-      <MessageInputBar handleGifButton= {()=>setShowGifBox(true)} handleMessage = {handleMessage}/>
+      <MessageInputBar handleMessage = {handleMessage} gifData = {gifData} />
       <MessageBody displayMessage = {displayMessage}/>
-     {showGifBox && <GifDisplay data = {gifData} handleGifClick = {handleGifClick}/>} 
     </div>
   );
 }
